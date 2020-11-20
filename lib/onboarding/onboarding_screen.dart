@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 import 'package:myflutter/login.dart';
 import 'package:nice_intro/intro_screen.dart';
-import 'package:tinycolor/tinycolor.dart';
 import 'package:nice_intro/intro_screens.dart';
 class OnBoardingScreen extends StatefulWidget {
   @override

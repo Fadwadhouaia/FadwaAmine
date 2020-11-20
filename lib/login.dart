@@ -1,7 +1,8 @@
-
+import 'package:myflutter/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:myflutter/register.dart';
 
 
 class Login extends StatefulWidget {
@@ -10,20 +11,19 @@ class Login extends StatefulWidget {
 }
 class _LoginState extends State<Login> {
 
-  static var _keyValidationForm = GlobalKey<FormState>();
+  static var _keyValidation = GlobalKey<FormState>();
 
   TextEditingController _textEditConEmail = TextEditingController();
   TextEditingController _textEditConPassword = TextEditingController();
-  TextEditingController _textEditConConfirmPassword = TextEditingController();
   bool isPasswordVisible = false;
-  bool isConfirmPasswordVisible = false;
+
 
 
 
   @override
   void initState() {
     isPasswordVisible = false;
-    isConfirmPasswordVisible = false;
+
     super.initState();
   }
 
@@ -87,7 +87,7 @@ class _LoginState extends State<Login> {
         child: Padding(
           padding: const EdgeInsets.all(25.0),
           child: Form(
-            key: _keyValidationForm,
+            key: _keyValidation,
             child: Column(
               children: <Widget>[
 
@@ -115,53 +115,27 @@ class _LoginState extends State<Login> {
                   ),
 
                 ),
+
                 Container(
                   child: TextFormField(
                     controller: _textEditConPassword,
                     focusNode: _passwordFocus,
                     keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
+                    textInputAction: TextInputAction.done,
                     validator: _validatePassword,
-                    onFieldSubmitted: (String value) {
-                      FocusScope.of(context)
-                          .requestFocus(_passwordConfirmFocus);
-                    },
                     obscureText: !isPasswordVisible,
                     decoration: InputDecoration(
-                        labelText: 'Password',
-                        suffixIcon: IconButton(
-                          icon: Icon(isPasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off),
-                          onPressed: () {
-                            setState(() {
-                              isPasswordVisible = !isPasswordVisible;
-                            });
-                          },
-                        ),
-                        icon: Icon(Icons.vpn_key)),
-                  ),
-                ), //text field: password
-                Container(
-                  child: TextFormField(
-                    controller: _textEditConConfirmPassword,
-                    focusNode: _passwordConfirmFocus,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
-                    validator: _validateConfirmPassword,
-                    obscureText: !isConfirmPasswordVisible,
-                    decoration: InputDecoration(
-                      labelText: 'Confirm Password',
+                      labelText: ' Password',
                       focusColor: Colors.red,
                       suffixIcon: IconButton(
-                        icon: Icon(isConfirmPasswordVisible
+                        icon: Icon(isPasswordVisible
                             ? Icons.visibility
                             : Icons.visibility_off),
 
                         onPressed: () {
                           setState(() {
-                            isConfirmPasswordVisible =
-                            !isConfirmPasswordVisible;
+                            isPasswordVisible =
+                            !isPasswordVisible;
                           },
                           );
                         },
@@ -183,12 +157,18 @@ class _LoginState extends State<Login> {
                     elevation: 5.0,
                     padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
                     child: Text(
-                      'Register',
+                      'Login',
                       style: TextStyle(fontSize: 16.0),
                     ),
-                    onPressed: () {
-                      if (_keyValidationForm.currentState.validate()) {
-                        _onTappedButtonRegister();
+                    onPressed: (
+
+                        ) {
+                     // if (_keyValidation.currentState.validate())
+                     {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => Home(),
+                            ));
                       }
                     },
                     shape: RoundedRectangleBorder(
@@ -201,18 +181,26 @@ class _LoginState extends State<Login> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Already Register? ',
+                          'Do not have an account?',
                         ),
                         InkWell(
                           splashColor: Colors.redAccent.withOpacity(0.5),
                           onTap: () {
                             _onTappedTextlogin();
                           },
-                          child: Text(
-                            ' Login',
-                            style: TextStyle(
-                                color: Colors.redAccent,
-                                fontWeight: FontWeight.bold),
+                          child: GestureDetector(
+                            onTap: ()
+                            {Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => Register(),
+                                ),
+                              );
+                            },
+                            child: Text (' Register',
+                                style: TextStyle(
+                                    color: Colors.redAccent,
+                                    fontWeight: FontWeight.bold)),
+
                           ),
                         )
                       ],

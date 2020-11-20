@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myflutter/annonces.dart';
 import 'package:myflutter/login.dart';
 import 'package:myflutter/pages/home.dart';
 import 'package:myflutter/profile.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         "first": (context) => OnBoardingScreen(),
         "home": (context) => Home(),
         "profile": (context) => ProfilePage(),
+        "annonces": (context) => annonces(),
       },
       home: OnBoardingScreen(),
     );
