@@ -43,6 +43,8 @@ dev_dependencies:
   tiled_tab_indicator: ^1.0.1
   intl: ^0.16.1
   flutter_form_builder: ^3.12.0
+  bubble_tab_indicator: ^0.1.4
+  flutter_point_tab_bar: ^0.1.0
 
 
 

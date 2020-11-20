@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myflutter/annonces.dart';
 import 'package:myflutter/login.dart';
 import 'package:myflutter/pages/home.dart';
+import 'package:myflutter/pages/product.dart';
 import 'package:myflutter/profile.dart';
 import 'package:myflutter/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,14 +29,14 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
       ),
-      initialRoute: initScreen == 0 || initScreen == null ? "first" : "login",
+      initialRoute: initScreen == 0 || initScreen == null ? "first" : "product",
       routes: {
         'register': (context) => Register(),
         'login': (context) => Login(),
         "first": (context) => OnBoardingScreen(),
         "home": (context) => Home(),
         "profile": (context) => ProfilePage(),
-        "annonces": (context) => annonces(),
+        "product": (context) => Product(),
       },
       home: OnBoardingScreen(),
     );
