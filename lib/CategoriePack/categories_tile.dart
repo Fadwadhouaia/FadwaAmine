@@ -14,8 +14,8 @@ class CategoriesTile extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          height: 80,
-          width: 80,
+          height: 100,
+          width: 100,
           padding: const EdgeInsets.all(25),
           decoration: BoxDecoration(
             color: this.color,
@@ -26,11 +26,13 @@ class CategoriesTile extends StatelessWidget {
             ),
           ),
           child: Image.asset(
-            this.assetPath,
+
+            this.assetPath, height: 70,width: 70,
           ),
         ),
         SizedBox(height: 5),
         Text(this.title,style: GoogleFonts.varelaRound(fontWeight: FontWeight.w500),)
+
       ],
     );
   }

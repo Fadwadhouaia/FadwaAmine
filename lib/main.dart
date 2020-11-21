@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myflutter/login.dart';
+import 'package:myflutter/pages/categorie.dart';
 import 'package:myflutter/pages/home.dart';
+import 'package:myflutter/pages/myhome.dart';
 import 'package:myflutter/pages/product.dart';
 import 'package:myflutter/pages/products/carrefour.dart';
 import 'package:myflutter/profile.dart';
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
       ),
-      initialRoute: initScreen == 0 || initScreen == null ? "first" : "login",
+      initialRoute: initScreen == 0 || initScreen == null ? "first" : "home",
       routes: {
         'register': (context) => Register(),
         'login': (context) => Login(),
@@ -39,6 +41,8 @@ class MyApp extends StatelessWidget {
         "profile": (context) => ProfilePage(),
         "product": (context) => Product(),
         "carrefour": (context) => Carrefour(),
+        "categorie": (context) => Categorie(),
+        "myhome": (context) => Myhome(),
       },
       home: OnBoardingScreen(),
     );

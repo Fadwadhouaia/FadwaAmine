@@ -2,12 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myflutter/CategoriePack/categories_tile.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
 class Categorie extends StatefulWidget {
   @override
   _CategorieState createState() => _CategorieState();
 }
 
 class _CategorieState extends State<Categorie> {
+  int _currentIndex=0;
+
+  List cardList=[
+    Item1(),
+    Item2(),
+    Item3(),
+    Item4()
+  ];
+
+  List<T> map<T>(List list, Function handler) {
+    List<T> result = [];
+    for (var i = 0; i < list.length; i++) {
+      result.add(handler(i, list[i]));
+    }
+    return result;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +45,51 @@ class _CategorieState extends State<Categorie> {
           color: Colors.white,
           child: Column(
             children: <Widget>[
-              Center(child: Image.asset('assets/images/banner.png')),
+              //Center(child: Image.asset('assets/images/banner.png')),
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: 200.0,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 3),
+                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  pauseAutoPlayOnTouch: true,
+                  aspectRatio: 2.0,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                ),
+                items: cardList.map((card){
+                  return Builder(
+                      builder:(BuildContext context){
+                        return Container(
+                          height: MediaQuery.of(context).size.height*0.30,
+                          width: MediaQuery.of(context).size.width,
+                          child: Card(
+                            color: Colors.white,
+                            child: card,
+                          ),
+                        );
+                      }
+                  );
+                }).toList(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: map<Widget>(cardList, (index, url) {
+                  return Container(
+                    width: 10.0,
+                    height: 10.0,
+                    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _currentIndex == index ? Colors.redAccent : Colors.grey,
+                    ),
+                  );
+                }),
+              ),
               _buildCategories(),
 
             ],
@@ -57,16 +119,18 @@ class _CategorieState extends State<Categorie> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                _ExploreAllButton(
-                  onTap: () {},
-                ),
+
               ],
             ),
           ),
           SizedBox(
             height: 20,
           ),
-          _buildCategoriesList()
+          _buildCategoriesList(),
+          SizedBox(
+            height: 20,
+          ),
+          _buildCategoriesList2()
         ],
       ),
     );
@@ -76,61 +140,146 @@ class _CategorieState extends State<Categorie> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        CategoriesTile(
-          assetPath: 'assets/images/bread.png',
-          color: Color(0xffFCE8A8),
-          title: 'Bakery',
+       GestureDetector(
+         onTap: (){
+
+         },
+         child:CategoriesTile(
+           assetPath: 'assets/images/yaourt.png',
+           color: Color(0xffFFDBC5),
+           title: 'Surgelée',
+         ),
+       ),
+        GestureDetector(
+          onTap: (){
+
+          },
+          child: CategoriesTile(
+            assetPath: 'assets/images/salmon.png',
+            color: Color(0xffFCE8A8),
+            title: 'Salée',
+          ),
         ),
-        CategoriesTile(
-          assetPath: 'assets/images/apple.png',
-          color: Color(0xffDFECF8),
-          title: 'Fruits',
+       GestureDetector(
+         onTap: (){
+
+         },
+         child:  CategoriesTile(
+           assetPath: 'assets/images/biscuit.png',
+           color: Color(0xffFFE4E1),
+           title: 'Sucrée',
+         ),
+       ),
+        // vert 0xffE2F3C2
+        // bleu 0xffDFECF8
+        //jaune 0xffFCE8A8
+        //saumon 0xffFFDBC5
+      ],
+    );
+  }
+  Widget _buildCategoriesList2() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        GestureDetector(
+          onTap: (){
+
+          },
+          child: CategoriesTile(
+            assetPath: 'assets/images/milk.png',
+            color: Color(0xffDFECF8),
+            title: 'Liquide',
+          ),
         ),
-        CategoriesTile(
-          assetPath: 'assets/images/vegetable.png',
-          color: Color(0xffE2F3C2),
-          title: 'Vegetables',
-        ),
-        CategoriesTile(
-          assetPath: 'assets/images/milk.png',
-          color: Color(0xffFFDBC5),
-          title: 'Drinks',
+        GestureDetector(
+          onTap: (){
+
+          },
+          child: CategoriesTile(
+            assetPath: 'assets/images/tomate.png',
+            color: Color(0xffE2F3C2),
+            title: 'Frai',
+          ),
         ),
       ],
     );
   }
-
-
 }
 
-class _ExploreAllButton extends StatelessWidget {
-  final Function onTap;
-  const _ExploreAllButton({
-    Key key,
-    this.onTap,
-  }) : super(key: key);
+
+class Item1 extends StatelessWidget {
+  const Item1({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: this.onTap,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Color(0xffE0E6EE),
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-              bottomRight: Radius.circular(10)),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Image.asset(
+          'assets/images/q.jpg',
+          height: 180.0,
+          fit: BoxFit.cover,
         ),
-        child: Text(
-          'Explore All',
-          style: GoogleFonts.varelaRound(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey[700]),
-        ),
-      ),
+
+      ],
     );
   }
 }
+
+class Item2 extends StatelessWidget {
+  const Item2({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Image.asset(
+          'assets/images/r.jpg',
+          height: 180.0,
+          fit: BoxFit.cover,
+        ),
+
+      ],
+    );
+  }
+}
+
+class Item3 extends StatelessWidget {
+  const Item3({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Image.asset(
+          'assets/images/s.jpg',
+          height: 180.0,
+          fit: BoxFit.cover,
+        ),
+
+      ],
+    );
+  }
+}
+
+class Item4 extends StatelessWidget {
+  const Item4({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Image.asset(
+          'assets/images/x.jpg',
+          height: 180.0,
+          fit: BoxFit.cover,
+        ),
+
+      ],
+    );
+  }
+}
+
