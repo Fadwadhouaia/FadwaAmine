@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
       ),
-      initialRoute: initScreen == 0 || initScreen == null ? "first" : "carrefour",
+      initialRoute: initScreen == 0 || initScreen == null ? "first" : "login",
       routes: {
         'register': (context) => Register(),
         'login': (context) => Login(),

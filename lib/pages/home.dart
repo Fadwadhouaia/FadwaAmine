@@ -4,7 +4,6 @@ import 'package:myflutter/pages/categorie.dart';
 import 'package:myflutter/pages/myhome.dart';
 import 'package:myflutter/pages/scan.dart';
 import 'package:myflutter/pages/devis.dart';
-import 'package:myflutter/register.dart';
 
 
 class Home extends StatefulWidget {
@@ -20,7 +19,7 @@ class _HomeState extends State<Home> {
     Myhome(),
     Scan(),
     Categorie(),
-    Register(),
+    Devis(),
   ]; // to store nested tabs
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = Myhome(); // Our first view in viewport
@@ -142,7 +141,7 @@ class _HomeState extends State<Home> {
                     onPressed: () {
                       setState(() {
                         currentScreen =
-                            Register();
+                            Devis();
                         currentTab = 3;
                       });
                     },

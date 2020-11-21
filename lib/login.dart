@@ -1,8 +1,10 @@
 import 'package:myflutter/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'dart:ui';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myflutter/register.dart';
+import 'package:myflutter/remote_data_source/loginSource.dart';
 
 
 class Login extends StatefulWidget {
@@ -17,7 +19,9 @@ class _LoginState extends State<Login> {
   TextEditingController _textEditConPassword = TextEditingController();
   bool isPasswordVisible = false;
 
-
+  String email;
+  String password;
+  LoginSource login = LoginSource();
 
 
   @override
@@ -30,6 +34,9 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+
+    LoginSource login = LoginSource();
+
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
     ScreenUtil.instance =
         ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
@@ -74,7 +81,7 @@ class _LoginState extends State<Login> {
   Widget getWidgetRegistrationCard() {
     final FocusNode _passwordEmail = FocusNode();
     final FocusNode _passwordFocus = FocusNode();
-    final FocusNode _passwordConfirmFocus = FocusNode();
+
 
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0,top: 20),
@@ -94,6 +101,10 @@ class _LoginState extends State<Login> {
                 Container(
                   child: TextFormField(
                     controller: _textEditConEmail,
+                    onChanged: (value){
+                      email = value;
+                      print(value);
+                    },
                     focusNode: _passwordEmail,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
@@ -119,6 +130,10 @@ class _LoginState extends State<Login> {
                 Container(
                   child: TextFormField(
                     controller: _textEditConPassword,
+                    onChanged: (value){
+                      password = value;
+                      print(value);
+                    },
                     focusNode: _passwordFocus,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.done,
@@ -160,16 +175,19 @@ class _LoginState extends State<Login> {
                       'Login',
                       style: TextStyle(fontSize: 16.0),
                     ),
-                    onPressed: (
-
-                        ) {
-                     // if (_keyValidation.currentState.validate())
-                     {
+                    onPressed: () async {
+                     //if (_keyValidation.currentState.validate())
+                      String response = await login (password:password,email:email);
+                      print(response);
+                      if(response != "Login isues")
                         Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => Home(),
                             ));
+                      else {
+                        ///alert goes here
                       }
+
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0)),
@@ -236,4 +254,5 @@ class _LoginState extends State<Login> {
   void _onTappedButtonRegister() {}
 
   void _onTappedTextlogin() {}
+
 }

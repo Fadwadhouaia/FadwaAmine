@@ -1,9 +1,8 @@
 import 'dart:convert';
-
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 
-class LoginScreen {
+class LoginSource {
   http.Client client;
   Future<String> call(
       {@required String email, @required String password}) async {
@@ -16,13 +15,11 @@ class LoginScreen {
           "password": password,
         }));
     if (response.statusCode == 200)
-      return getToken(json.decode(response.body));
+      print(response);
     else {
       return "Login isues";
     }
   }
 }
 
-String getToken(Map<String, dynamic> json) {
-  return json['token'];
-}
+
