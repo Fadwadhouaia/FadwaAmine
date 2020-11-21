@@ -35,7 +35,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
 
-    LoginSource login = LoginSource();
 
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
     ScreenUtil.instance =
@@ -186,6 +185,10 @@ class _LoginState extends State<Login> {
                             ));
                       else {
                         ///alert goes here
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => Login(),
+                            ));
                       }
 
                     },
@@ -247,11 +250,6 @@ class _LoginState extends State<Login> {
     return value.length < 5 ? 'Min 5 char required' : null;
   }
 
-  String _validateConfirmPassword(String value) {
-    return value.length < 5 ? 'Min 5 char required' : null;
-  }
-
-  void _onTappedButtonRegister() {}
 
   void _onTappedTextlogin() {}
 

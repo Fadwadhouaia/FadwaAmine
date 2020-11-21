@@ -1,10 +1,13 @@
 import 'package:flutter/gestures.dart';
-import 'package:myflutter/login.dart';
 import 'package:myflutter/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myflutter/routing.dart';
+import 'dart:ui';
+import 'package:myflutter/remote_data_source/registerSource.dart';
+import 'package:http/http.dart' as http;
+
 
 
 class Register extends StatefulWidget {
@@ -18,16 +21,19 @@ class _RegisterState extends State<Register> {
 
   TextEditingController _textEditConEmail = TextEditingController();
   TextEditingController _textEditConPassword = TextEditingController();
-  TextEditingController _textEditConConfirmPassword = TextEditingController();
+  TextEditingController _textEditConName = TextEditingController();
   bool isPasswordVisible = false;
-  bool isConfirmPasswordVisible = false;
 
   BuildContext ctx;
+
+  String email;
+  String name;
+  String password;
+  RegisterSource register ;
 
   @override
   void initState() {
     isPasswordVisible = false;
-    isConfirmPasswordVisible = false;
     super.initState();
   }
 
@@ -78,7 +84,7 @@ class _RegisterState extends State<Register> {
   Widget getWidgetRegistrationCard() {
     final FocusNode _passwordEmail = FocusNode();
     final FocusNode _passwordFocus = FocusNode();
-    final FocusNode _passwordConfirmFocus = FocusNode();
+    final FocusNode _passwordName = FocusNode();
 
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0,top: 20),
@@ -97,7 +103,38 @@ class _RegisterState extends State<Register> {
 
                 Container(
                   child: TextFormField(
+                    controller: _textEditConName,
+                    onChanged: (value) {
+                      name = value;
+                    },
+                    focusNode: _passwordEmail,
+                    //keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
+                    validator: _validateName,
+                    onFieldSubmitted: (String value) {
+                      FocusScope.of(context).requestFocus(_passwordName);
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'User Name',
+                      prefixIcon: Icon(Icons.face,
+                        color: Colors.red,),
+
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+
+                    ),
+                    cursorColor: Colors.red,
+                  ),
+
+                ),
+
+                Container(
+                  child: TextFormField(
                     controller: _textEditConEmail,
+                    onChanged: (value) {
+                      email = value;
+                    },
                     focusNode: _passwordEmail,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
@@ -123,6 +160,9 @@ class _RegisterState extends State<Register> {
                 Container(
                   child: TextFormField(
                     controller: _textEditConPassword,
+                    onChanged: (value) {
+                      password = value;
+                    },
                     focusNode: _passwordFocus,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.done,
@@ -152,38 +192,7 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                Container(
-                  child: TextFormField(
-                    controller: _textEditConConfirmPassword,
-                    focusNode: _passwordConfirmFocus,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
-                    validator: _validateConfirmPassword,
-                    obscureText: !isConfirmPasswordVisible,
-                    decoration: InputDecoration(
-                      labelText: 'Confirm Password',
-                      focusColor: Colors.red,
-                      suffixIcon: IconButton(
-                        icon: Icon(isConfirmPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off),
 
-                        onPressed: () {
-                          setState(() {
-                            isConfirmPasswordVisible =
-                            !isConfirmPasswordVisible;
-                          },
-                          );
-                        },
-                      ),
-                      prefixIcon: Icon(Icons.vpn_key, color: Colors.red,
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red),
-                      ),
-                    ),
-                  ),
-                ),
                 Container(
                   margin: EdgeInsets.only(top: 32.0),
                   width: double.infinity,
@@ -196,16 +205,21 @@ class _RegisterState extends State<Register> {
                       'Register',
                       style: TextStyle(fontSize: 16.0),
                     ),
-                    onPressed: (
-
-                        ) {
-                      // if (_keyValidationFormRegister.currentState.validate())
-                      {
+                    // if (_keyValidationFormRegister.currentState.validate())
+                    onPressed: () async {
+                      //if (_keyValidation.currentState.validate())
+                      register = RegisterSource(new http.Client());
+                      String response = await register (name:name, password:password,email:email);
+                      print(response);
+                      if(response != "Login isues")
                         Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => Home(),
                             ));
+                      else {
+                        ///alert goes here
                       }
+
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0)),
@@ -256,22 +270,20 @@ class _RegisterState extends State<Register> {
       return null;
     }
   }
+  String _validateName(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (!regex.hasMatch(value)) {
+      return 'Invalid Name';
+    } else {
+      return null;
+    }
+  }
 
   String _validatePassword(String value) {
     return value.length < 5 ? 'Min 5 char required' : null;
   }
 
-  String _validateConfirmPassword(String value) {
-    return value.length < 5 ? 'Min 5 char required' : null;
-  }
 
-  void _onTappedButtonRegister() {}
-
-  void _onTappedTextlogin() {
-   // Navigator.of(context).push(
-     // MaterialPageRoute(
-       // builder: (context) => Login(),
-      //),
-    //);
-  }
 }

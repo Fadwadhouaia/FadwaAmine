@@ -47,7 +47,7 @@ dev_dependencies:
   flutter_point_tab_bar: ^0.1.0
   carousel_slider: ^2.2.1
   http: ^0.12.0+2
-
+  giffy_dialog: ^1.8.0
 
 
 
