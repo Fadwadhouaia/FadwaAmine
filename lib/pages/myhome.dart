@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myflutter/CategoriePack/categories_tile.dart';
-import 'package:myflutter/components/fryo_icons.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:myflutter/widgets/widget_home_categories.dart';
+
 
 
 class Myhome extends StatefulWidget {
@@ -10,50 +10,30 @@ class Myhome extends StatefulWidget {
 }
 
 class _MyhomeState extends State<Myhome> {
+
+  final List<int> numbers = [1, 2, 3, 5, 8, 13, 21, 34, 55];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,),
-    body: SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Stack(
-            alignment: AlignmentDirectional.topCenter,
-            overflow: Overflow.visible,
-            children: <Widget>[
-              _buildCategories(),
-            ],
-          ),
-        ],
-      ),
-    ),
+       body: Container(
+         padding: EdgeInsets.only(top: 30),
+         child: ListView(
+           children: [
+             _buildCategories(),
+             WidgetCategories(),
+
+           ],
+         ),
+       ),
     );
   }
-
-
   Widget _buildCategories() {
-
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.only( bottom: 50,right: 20,top: 20,left: 20),
       child: Column(
         children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-
-
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
           _buildCategoriesList(),
-
         ],
       ),
     );
@@ -64,24 +44,24 @@ class _MyhomeState extends State<Myhome> {
       children: <Widget>[
         GestureDetector(
           child:  CategoriesTile(
-            assetPath: 'assets/images/geant.png',
-            color: Color(0xffDFECF8),
-            title: 'Liquide',
+            assetPath: 'assets/images/ge.png',
+            color: Color(0xffE2F3C2),
+            title: 'Geant',
           ),
         ),
         GestureDetector(
           child:  CategoriesTile(
-            assetPath: 'assets/images/monoprix.png',
-            color: Color(0xffE2F3C2),
-            title: 'Frai',
+            assetPath: 'assets/images/mo.png',
+            color: Color(0xffFFDBC5),
+            title: 'Monoprix',
           ),
         ),
 
         GestureDetector(
           child:  CategoriesTile(
-            assetPath: 'assets/images/carrefour.png',
-            color: Color(0xffE2F3C2),
-            title: 'Frai',
+            assetPath: 'assets/images/ca.png',
+            color: Color(0xffDFECF8),
+            title: 'Carrefour',
           ),
         ),
 
@@ -89,6 +69,7 @@ class _MyhomeState extends State<Myhome> {
       ],
     );
   }
+
 
 }
 
