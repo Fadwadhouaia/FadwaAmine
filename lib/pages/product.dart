@@ -9,7 +9,7 @@ class Product extends StatefulWidget {
 
 class _ProductState extends State<Product>
     with SingleTickerProviderStateMixin {
-  final tabList = ['Tab 1', 'Tab 2'];
+  final tabList = ['Tous', 'Géant', 'Carrefour', 'Monoprix'];
   TabController _tabController;
 
   @override
@@ -22,7 +22,8 @@ class _ProductState extends State<Product>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Point Tab Bar'),
+        backgroundColor: Colors.redAccent,
+       // title: Text('Point Tab Bar'),
         centerTitle: true,
         bottom: TabBar(
           controller: _tabController,

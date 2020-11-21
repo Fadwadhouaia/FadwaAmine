@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myflutter/login.dart';
 import 'package:myflutter/pages/home.dart';
 import 'package:myflutter/pages/product.dart';
+import 'package:myflutter/pages/products/carrefour.dart';
 import 'package:myflutter/profile.dart';
 import 'package:myflutter/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
       ),
-      initialRoute: initScreen == 0 || initScreen == null ? "first" : "product",
+      initialRoute: initScreen == 0 || initScreen == null ? "first" : "carrefour",
       routes: {
         'register': (context) => Register(),
         'login': (context) => Login(),
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         "home": (context) => Home(),
         "profile": (context) => ProfilePage(),
         "product": (context) => Product(),
+        "carrefour": (context) => Carrefour(),
       },
       home: OnBoardingScreen(),
     );
